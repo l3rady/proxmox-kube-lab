@@ -8,11 +8,11 @@ env_name = "dev"
 ########################################################################
 ## Specify Proxmox VE API URL, token details, and Proxmox host where VM will be hosted.
 ## If you've not created an API token, please refer to this guide: https://registry.terraform.io/providers/Telmate/proxmox/2.9.14/docs
-pm_api_url          = "https://your-proxmox-url/api"
-pm_api_token_id     = "your-api-token-id"
-pm_api_token_secret = "your-api-token-secret"
-pm_tls_insecure     = false
-pm_host             = "your-proxmox-host"
+pm_api_url          = "https://192.168.255.254:8006/api2/json"
+pm_api_token_id     = "terraform-prov@pve!terraform-prov-api-key"
+pm_api_token_secret = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+pm_tls_insecure     = true
+pm_host             = "pve"
 
 
 # Internal Network
@@ -54,3 +54,5 @@ vm_k8s_worker = {
   memory     = 3072
   disk_size  = 20
 }
+# Specify the storage pool where OS VM disk is placed.
+vm_os_disk_storage = "tank"
