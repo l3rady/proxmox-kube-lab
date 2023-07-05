@@ -53,6 +53,7 @@ createProxmoxVMTemplate () {
     qm create $proxmoxTemplateID --name $proxmoxTemplateName --memory 2048 --cores 2 --net0 virtio,bridge=vmbr0
     qm importdisk $proxmoxTemplateID $ubuntuImageFilename $vmDiskStorage
     qm set $proxmoxTemplateID --scsihw virtio-scsi-single --virtio0 $vmDiskStorage:vm-$proxmoxTemplateID-disk-0
+    qm resize $proxmoxTemplateID virtio0 8G
     qm set $proxmoxTemplateID --boot c --bootdisk virtio0
     qm set $proxmoxTemplateID --ide2 $vmDiskStorage:cloudinit
     qm set $proxmoxTemplateID --serial0 socket --vga serial0
