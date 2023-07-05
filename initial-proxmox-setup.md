@@ -45,3 +45,15 @@ Next we need to create a VM template.
 ```sh
 curl -s https://raw.githubusercontent.com/l3rady/proxmox-kube-lab/main/proxmox-scripts/create-vm-template.sh | bash
 ```
+
+This will create a vm template with ID 9000.
+
+Now on to creating the bastion host
+
+```sh
+qm clone 9000 9001 --name bastion --full true
+qm set 9001 --sshkey ~/.ssh/scott.pub
+qm set 9001 --net0 virtio,bridge=vmbr0 --ipconfig0 ip=192.168.255.2/24,gw=192.168.255.1
+qm set 9001 --net1 virtio,bridge=vmbr1 --ipconfig1 ip=10.0.1.2/24,gw=10.0.1.1
+qm start 9001
+```
