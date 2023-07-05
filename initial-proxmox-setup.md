@@ -8,7 +8,7 @@ Take a backup of the network configuration file /etc/network/interfaces.
 
 ```sh
 cp /etc/network/interfaces /etc/network/interfaces.original
-``
+```
 
 Open the /etc/network/interfaces file in a text editor and append the below configuration for the new network vmbr1.
 
