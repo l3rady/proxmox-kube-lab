@@ -16,9 +16,8 @@ init () {
 }
 
 installRequirements () {
-
-    sudo dpkg -l libguestfs-tools &> /dev/null || \
-    sudo apt update -y && sudo apt install libguestfs-tools -y
+    dpkg -l libguestfs-tools &> /dev/null || \
+    apt update -y && sudo apt install libguestfs-tools -y
 }
 
 getImage () {
@@ -31,34 +30,34 @@ getImage () {
         wget $ubuntuImageURL -O $_img
     fi
     
-    sudo cp $_img $ubuntuImageFilename
+    cp $_img $ubuntuImageFilename
 }
 
 enableCPUHotplug () {
-    sudo virt-customize -a $ubuntuImageFilename \
+    virt-customize -a $ubuntuImageFilename \
     --run-command 'echo "SUBSYSTEM==\"cpu\", ACTION==\"add\", TEST==\"online\", ATTR{online}==\"0\", ATTR{online}=\"1\"" > /lib/udev/rules.d/80-hotplug-cpu.rules' 
 }
 
 installQemuGA () {
-    sudo virt-customize -a $ubuntuImageFilename \
+    virt-customize -a $ubuntuImageFilename \
     --run-command 'sudo apt update -y && sudo apt install qemu-guest-agent -y && sudo systemctl start qemu-guest-agent'
 }
 
 resetMachineID () {
-    sudo virt-customize -x -a $ubuntuImageFilename \
+    virt-customize -x -a $ubuntuImageFilename \
     --run-command 'sudo echo -n >/etc/machine-id'
 }
 
 createProxmoxVMTemplate () {
-    sudo qm destroy $proxmoxTemplateID --purge || true
-    sudo qm create $proxmoxTemplateID --name $proxmoxTemplateName --memory 2048 --cores 2 --net0 virtio,bridge=vmbr0
-    sudo qm importdisk $proxmoxTemplateID $ubuntuImageFilename $vmDiskStorage
-    sudo qm set $proxmoxTemplateID --scsihw virtio-scsi-single --virtio0 $vmDiskStorage:vm-$proxmoxTemplateID-disk-0
-    sudo qm set $proxmoxTemplateID --boot c --bootdisk virtio0
-    sudo qm set $proxmoxTemplateID --ide2 $vmDiskStorage:cloudinit
-    sudo qm set $proxmoxTemplateID --serial0 socket --vga serial0
-    sudo qm set $proxmoxTemplateID --agent enabled=1,fstrim_cloned_disks=1
-    sudo qm template $proxmoxTemplateID
+    qm destroy $proxmoxTemplateID --purge || true
+    qm create $proxmoxTemplateID --name $proxmoxTemplateName --memory 2048 --cores 2 --net0 virtio,bridge=vmbr0
+    qm importdisk $proxmoxTemplateID $ubuntuImageFilename $vmDiskStorage
+    qm set $proxmoxTemplateID --scsihw virtio-scsi-single --virtio0 $vmDiskStorage:vm-$proxmoxTemplateID-disk-0
+    qm set $proxmoxTemplateID --boot c --bootdisk virtio0
+    qm set $proxmoxTemplateID --ide2 $vmDiskStorage:cloudinit
+    qm set $proxmoxTemplateID --serial0 socket --vga serial0
+    qm set $proxmoxTemplateID --agent enabled=1,fstrim_cloned_disks=1
+    qm template $proxmoxTemplateID
 }
 
 clean () { 
@@ -72,3 +71,4 @@ installQemuGA
 resetMachineID
 createProxmoxVMTemplate
 clean
+

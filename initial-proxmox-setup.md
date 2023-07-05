@@ -39,3 +39,9 @@ Execute ifreload command to apply the changes.
 ```sh
 ifreload -a
 ```
+
+Next we need to create a VM template.
+
+```sh
+curl -s https://raw.githubusercontent.com/l3rady/proxmox-kube-lab/main/proxmox-scripts/create-vm-template.sh | bash
+```
