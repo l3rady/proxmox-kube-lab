@@ -43,7 +43,7 @@ ifreload -a
 Next we need to create a VM template.
 
 ```sh
-curl -s https://raw.githubusercontent.com/l3rady/proxmox-kube-lab/main/proxmox-scripts/create-vm-template.sh | bash
+curl -s https://raw.githubusercontent.com/l3rady/proxmox-kube-lab/main/scripts/proxmox-create-vm-template.sh | bash
 ```
 
 This will create a vm template with ID 9000.
