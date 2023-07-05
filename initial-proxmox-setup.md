@@ -57,3 +57,14 @@ qm set 9001 --net0 virtio,bridge=vmbr0 --ipconfig0 ip=192.168.255.2/24,gw=192.16
 qm set 9001 --net1 virtio,bridge=vmbr1 --ipconfig1 ip=10.0.1.2/24,gw=10.0.1.1
 qm start 9001
 ```
+
+Setup a terraform role, user and API Key
+
+```sh
+pveum role add TerraformProv -privs "Datastore.AllocateSpace Datastore.Audit Pool.Allocate Sys.Audit Sys.Console Sys.Modify VM.Allocate VM.Audit VM.Clone VM.Config.CDROM VM.Config.Cloudinit VM.Config.CPU 
+VM.Config.Disk VM.Config.HWType VM.Config.Memory VM.Config.Network VM.Config.Options VM.Migrate VM.Monitor VM.PowerMgmt"
+pveum user add terraform-prov@pve
+pveum aclmod / -user terraform-prov@pve -role TerraformProv
+pveum user token add terraform-prov@pve terraform-prov-api-key
+```
+
