@@ -1,2 +1,9 @@
+# Terraform local files
+.terraform
+*.tfstate
+*.tfstate.*
+*.tfplan
+cloud.tf
+tmp
 .tfvars
 
