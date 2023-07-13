@@ -35,6 +35,7 @@ bastion_ssh_user = "ubuntu"
 ########################################################################
 ## Specify base64 encoding of SSH keys for Kubernetes admin authentication.
 ssh_public_keys = "put-base64-encoded-public-keys-here"
+ssh_private_key = "put-base64-encoded-private-keys-here"
 
 # VM specifications
 ########################################################################
